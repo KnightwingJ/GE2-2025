@@ -18,7 +18,13 @@ func seek(target) -> Vector3:
 func _ready()->void:
 	pass
 	
+	
+func draw_gizmos():
+	DebugDraw3D.draw_arrow(global_position,global_position+force, Color.RED)
+	DebugDraw3D.draw_arrow(global_position,global_position+velocity,Color.BLUE)
+
 func _process(delta: float) -> void:
+	draw_gizmos()
 	force = seek(target)
 	
 	acceleration=force/mass
@@ -27,7 +33,7 @@ func _process(delta: float) -> void:
 	
 	if velocity.length()>0:
 		global_transform.basis.z=velocity.normalized()
-	
+		look_at(global_position+velocity)
 	move_and_slide()
 	
 	pass
