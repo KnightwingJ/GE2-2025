@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ykm5w2xcdl1s"]
+
+[ext_resource type="Script" uid="uid://cnfveg5qdterh" path="res://boid.gd" id="1_rnpve"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p20re"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rnpve"]
+
+[node name="root" type="Node3D"]
+
+[node name="boid" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_rnpve")
+target = NodePath("../Marker3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="boid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_p20re")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7816, 0, 12.5959)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Marker3D"]
+mesh = SubResource("SphereMesh_rnpve")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 28.2551, 0)
