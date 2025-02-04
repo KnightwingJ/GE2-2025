@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdl7pxjuqykwe"]
+[gd_scene load_steps=8 format=3 uid="uid://cdl7pxjuqykwe"]
 
 [ext_resource type="Script" uid="uid://cks4uwsgfyggy" path="res://boid.gd" id="1_g7hsx"]
 [ext_resource type="Script" uid="uid://ceama6se3ec5g" path="res://FPController.gd" id="2_q6o6m"]
@@ -11,6 +11,13 @@
 [sub_resource type="PlaneMesh" id="PlaneMesh_tgpyc"]
 size = Vector2(100, 100)
 
+[sub_resource type="Curve3D" id="Curve3D_tgpyc"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.508921, 0.721801, 0.706356, 0, 0, 0, 0, 0, 0, -2.82154, 0.846926, 0.159324, 0, 0, 0, 0, 0, 0, -17.5661, -5.47417, -11.8056, 0, 0, 0, 0, 0, 0, 47.1028, -20.3274, -10.0294, 0, 0, 0, 0, 0, 0, 30.3601, 4.61603, 14.6343, 0, 0, 0, 0, 0, 0, -19.7725, 10.756, 6.85732),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
 [node name="root" type="Node3D"]
 
 [node name="boid" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_targer")]
@@ -22,11 +29,6 @@ arrive_targer = NodePath("../Marker3D")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="boid"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("BoxMesh_q6o6m")
-
-[node name="Camera3D" type="Camera3D" parent="boid"]
-transform = Transform3D(-0.999915, -5.65696e-05, -0.01306, -0.00112924, 0.99662, 0.0821418, 0.0130112, 0.0821495, -0.996535, -0.02244, 3.13526, -7.73397)
-script = ExtResource("2_q6o6m")
-rot_speed = 180.0
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.79465, 2.52161, 5.96061)
@@ -44,5 +46,14 @@ script = ExtResource("3_tgpyc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_tgpyc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.999915, -5.65645e-05, -0.01306, -0.00112924, 0.99662, 0.0821418, 0.0130112, 0.0821495, -0.996535, 19.5926, 4.8408, -25.365)
+script = ExtResource("2_q6o6m")
+rot_speed = 180.0
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19676, 2.87357, 0)
+curve = SubResource("Curve3D_tgpyc")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
