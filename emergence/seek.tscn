@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdl7pxjuqykwe"]
+[gd_scene load_steps=7 format=3 uid="uid://cdl7pxjuqykwe"]
 
 [ext_resource type="Script" uid="uid://cks4uwsgfyggy" path="res://boid.gd" id="1_g7hsx"]
 [ext_resource type="Script" uid="uid://ceama6se3ec5g" path="res://FPController.gd" id="2_q6o6m"]
@@ -8,33 +8,41 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_g7hsx"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_tgpyc"]
+size = Vector2(100, 100)
+
 [node name="root" type="Node3D"]
 
-[node name="boid" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target")]
+[node name="boid" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_targer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.615, 1.70554, -17.631)
 script = ExtResource("1_g7hsx")
 target = NodePath("../Marker3D")
+arrive_targer = NodePath("../Marker3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="boid"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("BoxMesh_q6o6m")
 
+[node name="Camera3D" type="Camera3D" parent="boid"]
+transform = Transform3D(-0.999915, -5.65696e-05, -0.01306, -0.00112924, 0.99662, 0.0821418, 0.0130112, 0.0821495, -0.996535, -0.02244, 3.13526, -7.73397)
+script = ExtResource("2_q6o6m")
+rot_speed = 180.0
+
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.79465, 0, 5.96061)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.79465, 2.52161, 5.96061)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Marker3D"]
 mesh = SubResource("SphereMesh_g7hsx")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.987688, -0.156434, 0, -6.83797e-09, -4.31732e-08, 1, -0.156434, -0.987688, -4.37114e-08, 0, 11.3645, 0)
-script = ExtResource("2_q6o6m")
-rot_speed = 180.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.482709, 0.841256, 0.243475, -0.751118, 0.540637, -0.378858, -0.450348, 0, 0.892853, 0, 0, -4.51959)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 10.0
 autostart = true
 script = ExtResource("3_tgpyc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_tgpyc")
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
